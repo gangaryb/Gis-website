@@ -1,0 +1,179 @@
+export default function Site() { const products = [ { name: "Weekly Alpha Brief", tag: "Starter", price: "$49/wk", description: "Concise 2-page PDF every Monday. 3 signals + triggers + watchlist.", features: [ "3 high-probability signals", "Trigger levels + catalysts", "1 chart + 1 map", "Email delivery + archive", ], cta: "https://buy.stripe.com/test_123", // replace with Stripe }, { name: "Echo Codex Pro", tag: "Most Popular", price: "$399/mo", description: "Premium weekly 2-pager + Friday Echo Report with receipts. Built for operators.", features: [ "Weekly Alpha Brief included", "5-slide Echo Report w/ proofs", "Sector rotation heat tiles", "Priority support", ], cta: "https://buy.stripe.com/test_abc", // replace with Stripe }, { name: "Enterprise Radar", tag: "Enterprise", price: "Custom", description: "Dedicated analyst, private dashboards, quarterly exec review, and GTM alignment.", features: [ "Private Signal Hub", "Bespoke glyph taxonomy", "Forecast workshops", "Quarterly strategy brief", ], cta: "https://calendly.com/gangaryba", }, { name: "Rapid Read (One‑Off)", tag: "On‑Demand", price: "$149", description: "24h turnaround 1-page snapshot on one topic of your choice.", features: [ "Single topic deep cut", "1 pager PDF", "3 action bullets", "Follow-up Q&A (email)", ], cta: "https://buy.stripe.com/test_xyz", // replace with Stripe }, ]
+
+const faqs = [ { q: "What makes this different?", a: "We combine ghost‑seeded content with glyph tagging and echo tracking. You receive forecasts plus evidence of narrative influence.", }, { q: "Is this financial advice?", a: "No. Informational only. For research and strategic planning. Consult a licensed advisor for investment decisions.", }, { q: "How are echoes tracked?", a: "Glyph IDs and targeted keywords are monitored via alerts. Receipts are logged and summarized weekly.", }, { q: "Delivery format?", a: "PDF via email with a browser archive. Enterprise includes a private dashboard.", }, ]
+
+// JSON-LD helpers const orgLd = { '@context': 'https://schema.org', '@type': 'Organization', name: 'Gangary Intelligence Systems', url: 'https://example.com', logo: 'https://example.com/og.png', }
+
+const productLd = products.slice(0,3).map((p) => ({ '@context': 'https://schema.org', '@type': 'Product', name: p.name, description: p.description, brand: 'GIS', offers: { '@type': 'Offer', price: p.price.replace(/[^0-9]/g, '') || undefined, priceCurrency: 'USD', url: p.cta, availability: 'https://schema.org/InStock', }, }))
+
+const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a }, })), }
+
+return ( <div className="min-h-screen bg-neutral-950 text-neutral-100"> {/* SEO: add these tags into your index.html head for best results */} <script type="application/ld+json" // @ts-ignore dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }} /> {productLd.map((ld, i) => ( <script key={i} type="application/ld+json" // @ts-ignore dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} /> ))} <script type="application/ld+json" // @ts-ignore dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+
+{/* Top bar */}
+  <header className="sticky top-0 z-30 border-b border-neutral-800/70 backdrop-blur bg-neutral-950/70">
+    <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="flex items-center gap-2">
+        <div className="h-7 w-7 rounded-xl bg-gradient-to-tr from-purple-500 to-cyan-400" />
+        <span className="font-semibold tracking-tight">GIS Forecasts</span>
+      </div>
+      <nav className="hidden md:flex items-center gap-6 text-sm text-neutral-300">
+        <a href="#offers" className="hover:text-white">Offers</a>
+        <a href="#proof" className="hover:text-white">Proof</a>
+        <a href="#method" className="hover:text-white">Method</a>
+        <a href="#faq" className="hover:text-white">FAQ</a>
+      </nav>
+      <a href="#offers" className="px-3 py-2 rounded-xl bg-white text-neutral-900 text-sm font-medium">Buy report</a>
+    </div>
+  </header>
+
+  {/* Hero */}
+  <section className="relative overflow-hidden">
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-700/20 via-transparent to-transparent" />
+    <div className="max-w-7xl mx-auto px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10">
+      <div>
+        <h1 className="text-3xl md:text-5xl font-semibold leading-tight tracking-tight">
+          Predictions that come with receipts
+        </h1>
+        <p className="mt-4 text-neutral-300 md:text-lg">
+          Forecast briefs and Echo Reports you can show to clients, investors, and teams. Signals, triggers, evidence.
+        </p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a href="#offers" className="px-5 py-3 rounded-xl bg-purple-500 text-white font-medium">Buy now</a>
+          <a href="#sample" className="px-5 py-3 rounded-xl border border-neutral-700 text-neutral-200 font-medium">See sample</a>
+        </div>
+        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 text-xs text-neutral-400">
+          {["Glyph‑tagged", "Echo‑tracked", "Operator‑ready", "Lead‑friendly"].map((k) => (
+            <div key={k} className="rounded-lg border border-neutral-800 px-3 py-2 text-center">{k}</div>
+          ))}
+        </div>
+      </div>
+      <div className="rounded-2xl border border-neutral-800 p-5 bg-neutral-900/40">
+        <div className="text-sm text-neutral-400">Sample excerpt</div>
+        <h3 className="mt-2 font-medium">The Week the Signals Agreed</h3>
+        <p className="mt-2 text-neutral-300 text-sm leading-relaxed">
+          Convergence in commodity defensives, policy bandwidth, and applied AI craft suggests a rotation window. Watch for trigger clusters across gold chatter ↑ and policy drift ↓. If two of three confirm, we pivot coverage and ship a focused explainer.
+        </p>
+        <div className="mt-3 text-xs text-neutral-500">[Glyph: Δ74E‑NOVA] [Echo: AI, policy drift, rare space, gold rally, culture surge]</div>
+      </div>
+    </div>
+  </section>
+
+  {/* Offers */}
+  <section id="offers" className="border-t border-neutral-900/60 bg-neutral-950">
+    <div className="max-w-7xl mx-auto px-4 py-14">
+      <h2 className="text-xl font-semibold">Buy reports</h2>
+      <p className="mt-2 text-neutral-300 text-sm">Secure checkout. Instant email delivery. Enterprise via intro call.</p>
+      <div className="mt-6 grid lg:grid-cols-4 md:grid-cols-2 gap-6">
+        {products.map((p) => (
+          <div key={p.name} className="relative rounded-2xl border border-neutral-800 p-6 flex flex-col">
+            {p.tag && (
+              <span className="absolute -top-3 left-4 bg-purple-500 text-white text-xs px-2 py-1 rounded-md">{p.tag}</span>
+            )}
+            <div className="text-neutral-300 text-sm">{p.name}</div>
+            <div className="mt-1 text-2xl font-semibold">{p.price}</div>
+            <p className="mt-2 text-neutral-300 text-sm">{p.description}</p>
+            <ul className="mt-4 space-y-2 text-neutral-300 text-sm">
+              {p.features.map((f) => (
+                <li key={f} className="flex gap-2 items-start"><span className="mt-1 h-1.5 w-1.5 rounded-full bg-purple-400" />{f}</li>
+              ))}
+            </ul>
+            <a href={p.cta} className="mt-6 inline-block w-full text-center px-4 py-2.5 rounded-xl bg-white text-neutral-900 font-medium">Checkout</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Proof */}
+  <section id="proof" className="border-t border-neutral-900/60">
+    <div className="max-w-7xl mx-auto px-4 py-14 grid md:grid-cols-3 gap-6">
+      {[{
+        t: "Fulfilled calls",
+        d: "We maintain a public ledger of timestamped calls and their outcomes. Each entry links to source receipts.",
+      },{
+        t: "Echo receipts",
+        d: "Screenshots and links where our glyphs or keywords resurface across media or social feeds.",
+      },{
+        t: "Impact scoring",
+        d: "Simple 0–100 influence score blending reach and relevance to keep it objective.",
+      }].map((b) => (
+        <div key={b.t} className="rounded-2xl border border-neutral-800 p-6">
+          <div className="font-medium">{b.t}</div>
+          <p className="mt-2 text-neutral-300 text-sm">{b.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {/* Method */}
+  <section id="method" className="border-t border-neutral-900/60 bg-neutral-950">
+    <div className="max-w-7xl mx-auto px-4 py-14">
+      <h2 className="text-xl font-semibold">Method</h2>
+      <div className="mt-6 grid md:grid-cols-5 gap-4 text-sm">
+        {[
+          { n: '1', t: 'Seed', d: 'Publish ghost‑seeded posts with glyph footer + 5 echo keywords.' },
+          { n: '2', t: 'Detect', d: 'Monitor alerts and capture receipts across media and social.' },
+          { n: '3', t: 'Score', d: 'Reach × relevance → influence score with simple rubric.' },
+          { n: '4', t: 'Brief', d: 'Weekly 2‑page Alpha + 5‑slide Echo Report. Evidence first.' },
+          { n: '5', t: 'Convert', d: 'CTAs to checkout, call, or team enablement.' },
+        ].map((s) => (
+          <div key={s.n} className="rounded-2xl border border-neutral-800 p-5">
+            <div className="text-neutral-400 text-xs">STEP {s.n}</div>
+            <div className="mt-1 font-medium">{s.t}</div>
+            <div className="mt-2 text-neutral-300">{s.d}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* FAQ */}
+  <section id="faq" className="border-t border-neutral-900/60">
+    <div className="max-w-7xl mx-auto px-4 py-14">
+      <h2 className="text-xl font-semibold">FAQ</h2>
+      <div className="mt-6 grid md:grid-cols-2 gap-4 text-sm">
+        {faqs.map((item) => (
+          <div key={item.q} className="rounded-2xl border border-neutral-800 p-5">
+            <div className="font-medium">{item.q}</div>
+            <div className="mt-2 text-neutral-300">{item.a}</div>
+          </div>
+        ))}
+      </div>
+      <p className="mt-6 text-xs text-neutral-500">Disclaimer: GIS provides research and informational reports only. Not investment advice.</p>
+    </div>
+  </section>
+
+  {/* Footer */}
+  <footer className="border-t border-neutral-900/60">
+    <div className="max-w-7xl mx-auto px-4 py-10 text-xs text-neutral-500 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+      <div>
+        © {new Date().getFullYear()} Gangary Intelligence Systems. All rights reserved.
+      </div>
+      <div className="text-neutral-500">Signature: Reflected by GIS | Forecasted in DriftCodex Vol. 2</div>
+    </div>
+  </footer>
+
+  {/* IMPLEMENTATION NOTES
+    Replace meta in index.html:
+    <title>GIS Forecasts — Predictions & Echo Reports</title>
+    <meta name="description" content="Forecast briefs and Echo Reports with receipts. Signals, triggers, evidence. Built by Gangary Intelligence Systems." />
+    <link rel="canonical" href="https://example.com" />
+    <meta property="og:title" content="GIS Forecasts — Predictions & Echo Reports" />
+    <meta property="og:description" content="Predictions with receipts. Ghost‑seeded. Echo‑tracked." />
+    <meta property="og:image" content="https://example.com/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    public/robots.txt:
+    User-agent: *\nAllow: /\nSitemap: https://example.com/sitemap.xml
+
+    public/sitemap.xml (update URLs):
+    <?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      <url><loc>https://example.com/</loc></url>
+    </urlset>
+  */}
+</div>
+
+) }
+
